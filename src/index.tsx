@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './pages/app/app.page';
+import SearchPage from './pages/search/search.page';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import {
@@ -12,7 +12,7 @@ import {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <SearchPage />,
   },
 ]);
 const root = ReactDOM.createRoot(

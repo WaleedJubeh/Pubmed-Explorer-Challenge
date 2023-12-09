@@ -1,0 +1,32 @@
+@mixin right()
+	flex: 0 0 70%
+
+@mixin left()
+	position: sticky
+	align-self: flex-start
+	top: 80px
+	flex: 1 0 30%
+
+@mixin container()
+	position: relative
+	padding: 50px
+	margin: auto
+	min-height: calc(100vh - 70px)
+	display: flex
+	gap: 30px
+
+	.left
+		@include left()
+	.right
+		@include right()
+
+@mixin header()
+	& > h1
+		color: white
+		font-size: clamp(18px, 3.2vw, 28px)
+
+.layout
+	& > .container
+		@include container()
+	& > .header
+		@include header()

@@ -1,0 +1,27 @@
+@mixin journal()
+  color: #b6b6b6
+  font-size: 16px
+@mixin title()
+  font-size: 20px
+  font-weight: 600
+  color: #333
+
+@mixin authors()
+  color: #808080
+  font-size: 12px
+  & > span
+    margin-inline-end: 4px
+
+@mixin abstract()
+  font-size: 14px
+  line-height: 18px
+.card
+  margin-bottom: 20px
+  & > .journal
+    @include journal()
+  & > .title
+    @include title()
+  & > .authors
+    @include authors()
+  & > .abstract
+    @include abstract()

@@ -1,0 +1,15 @@
+@mixin row()
+	width: 100%
+	display: flex
+	flex-wrap: wrap
+	gap: 10px
+	align-items: center
+	justify-content: space-between
+	margin-bottom: 20px
+
+	&[data-size='6']
+		& > *
+			flex-basis: calc(50% - 10px)
+
+.row
+	@include row()
