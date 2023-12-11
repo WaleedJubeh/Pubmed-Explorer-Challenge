@@ -1,5 +1,9 @@
+import { useEffect, useState } from 'react';
+import { QueryParams } from '../../../../@types/params/query-params';
 import { Search as SearchNS } from '../../../../@types/search';
 import classes from './filters.module.sass';
+
+import { useDebounce } from "@uidotdev/usehooks";
 
 import { Select, Input } from 'antd';
 
@@ -7,9 +11,19 @@ const { Search } = Input;
 
 interface IProps {
 	facets: SearchNS.IFacets | null;
+	params: SearchNS.IParams;
+	setParams: QueryParams.Function<SearchNS.IParams>;
 }
 
 const Filters = (props: IProps) => {
+	const [searchTerm, setSearchTerm] = useState<string>(props.params.search);
+	const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
+	useEffect(() => {
+		props.setParams({ search: debouncedSearchTerm });
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [debouncedSearchTerm]);
+
 	return (
 		<div>
 			<Search
@@ -19,6 +33,8 @@ const Filters = (props: IProps) => {
 				allowClear
 				enterButton="Search"
 				size="middle"
+				value={searchTerm || ''}
+				onChange={(event) => setSearchTerm(event.target.value)}
 			/>
 			<div className={classes.row}>
 				<label style={{ marginInlineEnd: 20 }}>Select Journal/s</label>
@@ -28,6 +44,8 @@ const Filters = (props: IProps) => {
 					placeholder="Select Journal/s"
 					style={{ width: 270 }}
 					options={props.facets?.journals || []}
+					value={props.params.journals}
+					onChange={(values) => props.setParams({ journals: values })}
 				/>
 				<label style={{ marginInlineEnd: 20 }}>Select Language/s</label>
 				<Select
@@ -36,6 +54,8 @@ const Filters = (props: IProps) => {
 					placeholder="Select Language/s"
 					style={{ width: 270 }}
 					options={props.facets?.languages || []}
+					value={props.params.languages}
+					onChange={(values) => props.setParams({ languages: values })}
 				/>
 			</div>
 			<div className={classes.row}>
@@ -46,14 +66,18 @@ const Filters = (props: IProps) => {
 					placeholder="Select Author/s"
 					style={{ width: 270 }}
 					options={props.facets?.authors || []}
+					value={props.params.authors}
+					onChange={(values) => props.setParams({ authors: values })}
+
 				/>
 				<div className={classes.row}>
 					<label style={{ marginInlineEnd: 20 }}>Sort By</label>
 					<Select
 						title='Sort by'
-						defaultValue="relevance_score"
-						style={{ width: 255 }}
-						options={[{ value: 'relevance_score', label: 'Relevance score' }, { value: 'date', label: 'Date' }]}
+						style={{ width: 270 }}
+						options={[{ value: 'RELEVANCE_SCORE', label: 'Relevance score' }, { value: 'DATE', label: 'Date' }]}
+						value={props.params.sortType}
+						onChange={(value) => props.setParams({ sortType: value })}
 					/>
 				</div>
 			</div>

@@ -26,8 +26,16 @@ export namespace Search {
 		authors: string[];
 	}
 
-	export interface ISearchPayload {
+	export interface ISearchPayload extends IParams {
 		page: number;
 		pageSize: number;
+	}
+
+	export interface IParams {
+		search?: string;
+		authors?: string[];
+		languages?: string[];
+		journals?: string[];
+		sortType?: string;
 	}
 }

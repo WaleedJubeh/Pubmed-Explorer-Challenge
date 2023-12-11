@@ -1,0 +1,1 @@
+export { default as useGenericParams } from './params.hook';

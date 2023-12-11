@@ -1,13 +1,17 @@
 import classes from './search.module.sass';
 
-import { Layout } from 'antd';
+import { Spin, Layout } from 'antd';
 import { Header, Content } from 'antd/es/layout/layout';
 import ArticlesList from '../../components/page-components/search/articles-list/articles-list.component';
 import { Filters } from '../../components/page-components/search';
+
 import { useSearch } from '../../hooks/pages/search';
+import useParams from '../../hooks/pages/search/params.hook';
 
 function SearchPage() {
-	const search = useSearch();
+	const [params, setParams] = useParams();
+	const search = useSearch(params);
+
 	return (
 		<Layout className={classes.layout}>
 			<Header
@@ -25,11 +29,25 @@ function SearchPage() {
 			</Header>
 			<div className={classes.container}>
 				<div className={classes.left}>
-					<Filters facets={search.facets} />
+					<Filters
+						facets={search.facets}
+						params={params}
+						setParams={setParams}
+					/>
 				</div>
 				<div className={classes.right}>
 					<Content>
-						<ArticlesList hasMore={search.hasMore} next={() => search.retrieve()} result={search.result || []} total={search.total} />
+						{
+							search.init
+								? (
+									<ArticlesList
+										hasMore={search.hasMore}
+										next={() => search.retrieve(true)}
+										result={search.result || []}
+										total={search.total} />
+								)
+								: (<Spin size="large" />)
+						}
 					</Content>
 				</div >
 			</div>

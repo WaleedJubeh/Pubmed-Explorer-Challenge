@@ -7,12 +7,18 @@ class SearchService {
 	constructor() {
 		this.API = process.env.REACT_APP_SEARCH_API as string;
 	}
+
 	async search(payload: Search.ISearchPayload) {
 		const options: RequestInit = {
-			method: 'GET'
+			method: 'POST',
+			body: JSON.stringify(payload),
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		};
 
-		return fetch(`${this.API}/api/articles/search?page=${payload.page}&pageSize=${payload.pageSize}`, options)
+		// POST query to make it easier for frontend to handle complex search params.
+		return fetch(`${this.API}/api/articles/search`, options)
 			.then(throwHttpError)
 			.then(response => response.json() as unknown as Search.IResponse);
 	}

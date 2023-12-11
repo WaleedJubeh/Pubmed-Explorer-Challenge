@@ -1,55 +1,74 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { Search } from '../../../@types/search';
 import searchService from '../../../services/search.service';
 
 interface IState {
 	loading: boolean;
-	page: number;
-	pageSize: number;
 	hasMore: boolean;
 	result: Search.IArticle[] | null;
 	facets: Search.IFacets | null;
-	total: number,
+	total: number;
+	page: number;
+	pageSize: number;
+	init: boolean;
 }
+const getInitialState = (): IState => ({
+	total: 0,
+	page: 1,
+	pageSize: 20,
+	hasMore: true,
+	loading: false,
+	facets: null,
+	result: null,
+	init: false
+});
 
-const useSearch = () => {
-	const [state, setState] = useState<IState>({
-		page: 1,
-		pageSize: 10,
-		total: 0,
-		hasMore: true,
-		loading: false,
-		facets: null,
-		result: null
-	});
+const useSearch = (params: Partial<Search.IParams>) => {
+	const [state, setState] = useState<IState>(getInitialState());
 
-	const retrieve = () => {
+	const retrieve = (next?: boolean) => {
+		if (next) {
+			if (!state.hasMore) {
+				return;
+			}
+
+			setState({
+				...state,
+				loading: true,
+				init: true
+			});
+		} else {
+			setState({
+				...state,
+				init: false
+			});
+		}
+
 		if (state.loading) {
 			return;
 		}
 
-		setState({
-			...state,
-			loading: true
-		});
+		const nextPage = next ? state.page : 1;
 
-		searchService.search({ page: state.page, pageSize: state.pageSize }).then(searchResult => {
-			const finalResult = (state.result || []).concat(searchResult.result);
+		searchService.search({ page: nextPage, pageSize: state.pageSize, ...params }).then(searchResult => {
+			const finalResult = nextPage === 1 ? searchResult.result : (state.result || []).concat(searchResult.result);
 			const hasMore = searchResult.total > finalResult.length;
 			setState({
 				...state,
-				page: searchResult.page + 1,
+				page: nextPage + 1,
 				pageSize: searchResult.pageSize,
 				facets: searchResult.facets,
 				result: finalResult,
 				loading: false,
 				total: searchResult.total,
-				hasMore
+				hasMore,
+				init: true
 			});
 		});
 	};
 
-	useEffect(() => retrieve(), []);
+	useEffect(() => retrieve(), [params]);
 	return { ...state, retrieve };
 };
 

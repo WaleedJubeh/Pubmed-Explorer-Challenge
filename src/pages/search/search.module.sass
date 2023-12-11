@@ -10,20 +10,20 @@
 @mixin container()
 	position: relative
 	padding: 50px
-	margin: auto
 	min-height: calc(100vh - 70px)
 	display: flex
 	gap: 30px
 
-	.left
+	& > .left
 		@include left()
-	.right
+
+	& > .right
 		@include right()
 
 @mixin header()
 	& > h1
 		color: white
-		font-size: clamp(18px, 3.2vw, 28px)
+		font-size: clamp(18px, 2vw, 28px)
 
 .layout
 	& > .container
