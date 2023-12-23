@@ -65,6 +65,9 @@ const useSearch = (params: Partial<Search.IParams>) => {
 				hasMore,
 				init: true
 			});
+		}).catch(error => {
+			console.error(error);
+			setState({...state, init: true})
 		});
 	};
 

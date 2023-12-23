@@ -15,7 +15,7 @@ const ArticlesList = (props: IProps) => {
 		<InfiniteScroll
 			dataLength={props.result.length}
 			next={props.next}
-			hasMore={true}
+			hasMore={props.hasMore}
 			loader={<Skeleton paragraph={{ rows: 3 }} title={true} active />}
 		>
 			{props.result.map(article => <Article key={article.id} article={article} />)}
