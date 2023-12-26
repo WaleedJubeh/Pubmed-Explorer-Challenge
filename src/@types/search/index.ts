@@ -1,3 +1,5 @@
+import { QueryParams } from '../params/query-params';
+
 export namespace Search {
 	export type FacetsKeys = 'languages' | 'journals' | 'authors';
 
@@ -33,9 +35,9 @@ export namespace Search {
 
 	export interface IParams {
 		search?: string;
-		authors?: string[];
-		languages?: string[];
-		journals?: string[];
+		authors?: QueryParams.Facet.IValue;
+		languages?: QueryParams.Facet.IValue;
+		journals?: QueryParams.Facet.IValue;
 		sortType?: string;
 	}
 }

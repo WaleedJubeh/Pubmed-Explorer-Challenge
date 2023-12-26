@@ -21,7 +21,7 @@ const Filters = (props: IProps) => {
 
 	useEffect(() => {
 		props.setParams({ search: debouncedSearchTerm });
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedSearchTerm]);
 
 	return (
@@ -44,8 +44,8 @@ const Filters = (props: IProps) => {
 					placeholder="Select Journal/s"
 					style={{ width: 270 }}
 					options={props.facets?.journals || []}
-					value={props.params.journals}
-					onChange={(values) => props.setParams({ journals: values })}
+					value={props.params.journals?.value || []}
+					onChange={(values) => props.setParams({ journals: { operator: 'OR', value: values } })}
 				/>
 				<label style={{ marginInlineEnd: 20 }}>Select Language/s</label>
 				<Select
@@ -54,8 +54,8 @@ const Filters = (props: IProps) => {
 					placeholder="Select Language/s"
 					style={{ width: 270 }}
 					options={props.facets?.languages || []}
-					value={props.params.languages}
-					onChange={(values) => props.setParams({ languages: values })}
+					value={props.params.languages?.value || []}
+					onChange={(values) => props.setParams({ languages: { operator: 'OR', value: values } })}
 				/>
 			</div>
 			<div className={classes.row}>
@@ -66,8 +66,8 @@ const Filters = (props: IProps) => {
 					placeholder="Select Author/s"
 					style={{ width: 270 }}
 					options={props.facets?.authors || []}
-					value={props.params.authors}
-					onChange={(values) => props.setParams({ authors: values })}
+					value={props.params.authors?.value || []}
+					onChange={(values) => props.setParams({ authors: { operator: 'AND', value: values } })}
 
 				/>
 				<div className={classes.row}>

@@ -67,4 +67,11 @@ export namespace QueryParams {
 	 * @returns Resulting query string.
 	 */
 	export type Function<T> = (params: Partial<T>, extras?: Partial<IExtras>) => string;
+
+	export namespace Facet {
+		export interface IValue {
+			operator: 'AND' | 'OR';
+			value: string[];
+		}
+	}
 }

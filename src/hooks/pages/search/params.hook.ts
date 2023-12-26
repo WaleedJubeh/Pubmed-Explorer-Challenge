@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ArrayOf, StringParam } from '../../../utils/params';
+import { FacetParam, StringParam } from '../../../utils/params';
 import { QueryParams } from '../../../@types/params/query-params';
 
 import { useGenericParams } from './../../common';
@@ -7,9 +7,9 @@ import { Search } from '../../../@types/search';
 
 const template: QueryParams.Template<Search.IParams> = {
 	search: new StringParam(),
-	authors: new ArrayOf(new StringParam()),
-	journals: new ArrayOf(new StringParam()),
-	languages: new ArrayOf(new StringParam()),
+	authors: new FacetParam(),
+	journals: new FacetParam(),
+	languages: new FacetParam(),
 	sortType: new StringParam()
 };
 
