@@ -25,7 +25,7 @@ function SearchPage() {
 					alignItems: 'center',
 				}}
 			>
-				<h1>Pubmed Search Application using Elasticsearch and NodeJS</h1>
+				<h1>Pubmed Explorer</h1>
 			</Header>
 			<div className={classes.container}>
 				<div className={classes.left}>
