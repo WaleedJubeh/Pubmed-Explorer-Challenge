@@ -10,7 +10,7 @@ const template: QueryParams.Template<Search.IParams> = {
 	authors: new FacetParam(),
 	journals: new FacetParam(),
 	languages: new FacetParam(),
-	sortType: new StringParam()
+	sortBy: new StringParam()
 };
 
 const useParams = () => {
@@ -19,7 +19,7 @@ const useParams = () => {
 	const enrichedParams = useMemo<Search.IParams>(() => {
 		return {
 			...params,
-			sortType: params.sortType || 'RELEVANCE_SCORE'
+			sortBy: params.sortBy || 'RELEVANCE_SCORE'
 		};
 	}, [params]);
 

@@ -69,8 +69,8 @@ const Filters = (props: IProps) => {
 						title='Sort by'
 						style={{ width: 270 }}
 						options={[{ value: 'RELEVANCE_SCORE', label: 'Relevance score' }, { value: 'DATE', label: 'Date' }]}
-						value={props.params.sortType}
-						onChange={(value) => props.setParams({ sortType: value })}
+						value={props.params.sortBy}
+						onChange={(value) => props.setParams({ sortBy: value })}
 					/>
 				</div>
 			</div>

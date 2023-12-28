@@ -2,6 +2,7 @@ import { QueryParams } from '../params/query-params';
 
 export namespace Search {
 	export type FacetsKeys = 'languages' | 'journals' | 'authors';
+	export type SORT_TYPES = 'RELEVANCE_SCORE' | 'DATE';
 
 	export type IFacets = {
 		[key in Search.FacetsKeys]: IFacetsOption[];
@@ -37,6 +38,8 @@ export namespace Search {
 			languages?: QueryParams.Facet.IValue;
 			journals?: QueryParams.Facet.IValue;
 		};
+
+		sortBy: SORT_TYPES;
 	}
 
 	export interface IParams {
@@ -44,6 +47,6 @@ export namespace Search {
 		authors?: QueryParams.Facet.IValue;
 		languages?: QueryParams.Facet.IValue;
 		journals?: QueryParams.Facet.IValue;
-		sortType?: string;
+		sortBy?: SORT_TYPES;
 	}
 }

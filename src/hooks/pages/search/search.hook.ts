@@ -58,7 +58,8 @@ const useSearch = (params: Partial<Search.IParams>) => {
 				authors: params.authors,
 				journals: params.journals,
 				languages: params.languages
-			}
+			},
+			sortBy: params.sortBy
 		};
 		searchService.search(searchPayload).then(searchResult => {
 			const finalResult = nextPage === 1 ? searchResult.result : (state.result || []).concat(searchResult.result);
