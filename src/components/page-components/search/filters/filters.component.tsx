@@ -6,6 +6,7 @@ import classes from './filters.module.sass';
 import { useDebounce } from "@uidotdev/usehooks";
 
 import { Select, Input } from 'antd';
+import Facet from './facet/facet.component';
 
 const { Search } = Input;
 
@@ -37,38 +38,30 @@ const Filters = (props: IProps) => {
 				onChange={(event) => setSearchTerm(event.target.value)}
 			/>
 			<div className={classes.row}>
-				<label style={{ marginInlineEnd: 20 }}>Select Journal/s</label>
-				<Select
-					title="Select Journal/s"
-					mode="multiple"
+				<Facet
+					label="Select Journal/s"
 					placeholder="Select Journal/s"
-					style={{ width: 270 }}
-					options={props.facets?.journals || []}
-					value={props.params.journals?.value || []}
-					onChange={(values) => props.setParams({ journals: { operator: 'OR', value: values } })}
+					options={props.facets?.journals}
+					facet={props.params.journals}
+					onChange={(values) => props.setParams({ journals: { ...props.params.journals, value: values, operator: 'OR' } })}
+					onInput={(search) => props.setParams({ journals: { ...props.params.journals, typeAhead: search } })}
 				/>
-				<label style={{ marginInlineEnd: 20 }}>Select Language/s</label>
-				<Select
-					title="Select Language/s"
-					mode="multiple"
+				<Facet
+					label="Select Language/s"
 					placeholder="Select Language/s"
-					style={{ width: 270 }}
-					options={props.facets?.languages || []}
-					value={props.params.languages?.value || []}
-					onChange={(values) => props.setParams({ languages: { operator: 'OR', value: values } })}
+					options={props.facets?.languages}
+					facet={props.params.languages}
+					onChange={(values) => props.setParams({ languages: { ...props.params.languages, value: values, operator: 'OR' } })}
 				/>
 			</div>
 			<div className={classes.row}>
-				<label style={{ marginInlineEnd: 20 }}>Select Author/s</label>
-				<Select
-					title='Select Author/s'
-					mode="multiple"
+				<Facet
+					label="Select Author/s"
 					placeholder="Select Author/s"
-					style={{ width: 270 }}
-					options={props.facets?.authors || []}
-					value={props.params.authors?.value || []}
-					onChange={(values) => props.setParams({ authors: { operator: 'AND', value: values } })}
-
+					options={props.facets?.authors}
+					facet={props.params.authors}
+					onChange={(values) => props.setParams({ authors: { ...props.params.authors, value: values, operator: 'AND' } })}
+					onInput={(search) => props.setParams({ authors: { ...props.params.authors, typeAhead: search } })}
 				/>
 				<div className={classes.row}>
 					<label style={{ marginInlineEnd: 20 }}>Sort By</label>

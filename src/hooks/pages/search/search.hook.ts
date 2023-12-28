@@ -50,8 +50,17 @@ const useSearch = (params: Partial<Search.IParams>) => {
 		}
 
 		const nextPage = next ? state.page : 1;
-
-		searchService.search({ page: nextPage, pageSize: state.pageSize, ...params }).then(searchResult => {
+		const searchPayload: Search.ISearchPayload = {
+			page: nextPage,
+			pageSize: state.pageSize,
+			search: params.search,
+			facets: {
+				authors: params.authors,
+				journals: params.journals,
+				languages: params.languages
+			}
+		};
+		searchService.search(searchPayload).then(searchResult => {
 			const finalResult = nextPage === 1 ? searchResult.result : (state.result || []).concat(searchResult.result);
 			const hasMore = searchResult.total > finalResult.length;
 			setState({
@@ -67,7 +76,7 @@ const useSearch = (params: Partial<Search.IParams>) => {
 			});
 		}).catch(error => {
 			console.error(error);
-			setState({...state, init: true})
+			setState({ ...state, init: true });
 		});
 	};
 

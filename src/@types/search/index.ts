@@ -28,9 +28,15 @@ export namespace Search {
 		authors: string[];
 	}
 
-	export interface ISearchPayload extends IParams {
+	export interface ISearchPayload {
 		page: number;
 		pageSize: number;
+		search?: string;
+		facets: {
+			authors?: QueryParams.Facet.IValue;
+			languages?: QueryParams.Facet.IValue;
+			journals?: QueryParams.Facet.IValue;
+		};
 	}
 
 	export interface IParams {

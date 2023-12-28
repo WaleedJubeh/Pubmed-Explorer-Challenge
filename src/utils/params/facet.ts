@@ -4,8 +4,8 @@ export default class FacetParam extends QueryParams.Param<QueryParams.Facet.IVal
 	private cache: { key: string; value: QueryParams.Facet.IValue; };
 
 	encode = (input: QueryParams.Facet.IValue): string => {
-		return input.value.length
-			? `${input.operator}::${input.value.join(';')}`
+		return input.value?.length || input.typeAhead
+			? [input.operator, input.typeAhead,input.value?.join(';')].join('::')
 			: undefined;
 	};
 
@@ -14,11 +14,12 @@ export default class FacetParam extends QueryParams.Param<QueryParams.Facet.IVal
 			return this.cache.value;
 		}
 
-		const [operator, values] = value?.split('::');
+		const [operator, typeAhead, values] = value?.split('::');
 
 		const decoded = {
 			operator: operator as QueryParams.Facet.IValue['operator'] || 'OR',
-			value: values?.split(';') || []
+			value: values?.split(';').filter(Boolean) || [],
+			typeAhead
 		};
 
 		this.cache = {

@@ -71,6 +71,7 @@ export namespace QueryParams {
 	export namespace Facet {
 		export interface IValue {
 			operator: 'AND' | 'OR';
+			typeAhead?: string;
 			value: string[];
 		}
 	}
