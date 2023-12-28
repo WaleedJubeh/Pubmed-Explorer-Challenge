@@ -1,4 +1,4 @@
-# Pubmed Viewer Challenge
+# Pubmed Explorer Challenge
 
 A React application that is ready for integration with an API. The application has all the needed code to send filter parameters and receive data from the API.
 
